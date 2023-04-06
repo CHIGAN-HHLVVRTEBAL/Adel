@@ -1,0 +1,38 @@
+CREATE TABLE Клиенты (
+  ID INT PRIMARY KEY,
+  Имя VARCHAR(50) NOT NULL,
+  Фамилия VARCHAR(50) NOT NULL,
+  ЭлектроннаяПочта VARCHAR(50) NOT NULL,
+  Пароль VARCHAR(255) NOT NULL,
+  ДатаСоздания TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Продукты (
+  ID INT PRIMARY KEY,
+  НаименованиеПродукта VARCHAR(50) NOT NULL,
+  Описание TEXT,
+  Цена DECIMAL(10, 2) NOT NULL,
+  КатегорияID INT NOT NULL,
+  FOREIGN KEY (КатегорияID) REFERENCES Категории(ID)
+);
+
+CREATE TABLE Заказы (
+  ID INT PRIMARY KEY,
+  КлиентID INT NOT NULL,
+  ДатаСоздания TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (КлиентID) REFERENCES Клиенты(ID)
+);
+
+CREATE TABLE ДеталиЗаказа (
+  ID INT PRIMARY KEY,
+  ЗаказID INT NOT NULL,
+  ПродуктID INT NOT NULL,
+  Количество INT NOT NULL,
+  FOREIGN KEY (ЗаказID) REFERENCES Заказы(ID),
+  FOREIGN KEY (ПродуктID) REFERENCES Продукты(ID)
+);
+
+CREATE TABLE Категории (
+  ID INT PRIMARY KEY,
+  НаименованиеКатегории VARCHAR(50) NOT NULL
+);
